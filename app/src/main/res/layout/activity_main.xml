@@ -255,6 +255,16 @@
                 android:inputType="text"/>
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/vagasInteresseEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Vagas de Interesse"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/metradoOuDoutoradoLl"/>
+
         <LinearLayout
             android:id="@+id/botoesLl"
             android:layout_width="match_parent"
@@ -263,7 +273,7 @@
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/metradoOuDoutoradoLl">
+            app:layout_constraintTop_toBottomOf="@id/vagasInteresseEt">
 
             <Button
                 android:id="@+id/btnSalvar"
@@ -278,8 +288,6 @@
                 android:layout_height="wrap_content"
                 android:text="Limpar"/>
         </LinearLayout>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
