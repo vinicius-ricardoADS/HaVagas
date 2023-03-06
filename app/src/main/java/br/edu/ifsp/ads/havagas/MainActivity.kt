@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.core.view.get
+import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
 import br.edu.ifsp.ads.havagas.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
                 celularCb.isChecked = false
                 sexoRg.clearCheck()
                 vagasInteresseEt.setText("")
+                anoFormaturaEt.setText("")
                 formacaoSp.setSelection(0)
             }
         }
@@ -88,7 +90,8 @@ class MainActivity : AppCompatActivity() {
                 camposEntrada.add("Telefone ${findViewById<RadioButton>(tipoTelefoneRg.checkedRadioButtonId).text}")
             if (celularEt.isVisible)
                 camposEntrada.add("Celular: ${celularEt.text}")
-            camposEntrada.add("Sexo: ${findViewById<RadioButton>(sexoRg.checkedRadioButtonId).text}")
+            if (sexoRg.checkedRadioButtonId != -1)
+                camposEntrada.add("Sexo: ${findViewById<RadioButton>(sexoRg.checkedRadioButtonId).text}")
             if (datanascEt.text.isNotEmpty())
                 camposEntrada.add("Data de Nascimento: ${datanascEt.text}")
             if (anoFormaturaEt.isVisible) {
@@ -96,16 +99,16 @@ class MainActivity : AppCompatActivity() {
                     camposEntrada.add("Fundamental, Ano de Formatura: ${anoFormaturaEt.text}")
             }
             if (graducaoOuEspecializacaoLl.isVisible) {
-                if (formacaoSp.get(0).toString() == "Graduação") {
-                    if (anoFormaturaEt.text.isNotEmpty() && instituicaoEt.text.isNotEmpty()) {
+                if (formacaoSp.selectedItem.toString() == "Graduação") {
+                    if (anoConclusaoEt.text.isNotEmpty() && instituicaoEt.text.isNotEmpty()) {
                         camposEntrada.add(
                             "Graduação, Ano de Conclusão e Instituição: " +
                                     "${anoConclusaoEt.text} - ${instituicaoEt.text}"
                         )
                     }
                 }
-                if (formacaoSp.get(0).toString() == "Especialização") {
-                    if (anoFormaturaEt.text.isNotEmpty() && instituicaoEt.text.isNotEmpty()) {
+                if (formacaoSp.selectedItem.toString() == "Especialização") {
+                    if (anoConclusaoEt.text.isNotEmpty() && instituicaoEt.text.isNotEmpty()) {
                         camposEntrada.add(
                             "Especialização, Ano de Conclusão e Instituição: " +
                                     "${anoConclusaoEt.text} - ${instituicaoEt.text}"
@@ -114,16 +117,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             if (metradoOuDoutoradoLl.isVisible) {
-                if (anoConclusaoMestEt.text.isNotEmpty() && instituicaoMesEt.text.isNotEmpty() && tituloEt.text.isNotEmpty()
-                    && orientadorEt.text.isNotEmpty()) {
-                    if (formacaoSp.get(0).toString() == "Mestrado") {
+                if (formacaoSp.selectedItem.toString() == "Mestrado") {
+                    if (anoConclusaoMestEt.text.isNotEmpty() && instituicaoMesEt.text.isNotEmpty() && tituloEt.text.isNotEmpty()
+                        && orientadorEt.text.isNotEmpty()) {
                         camposEntrada.add(
                             "Mestrado, Ano de Conclusão, Instituição, Título Monografia e Orientador: " +
                                     "${anoConclusaoEt.text} - ${instituicaoEt.text} - ${tituloEt.text}" +
                                     " - ${orientadorEt.text}"
                         )
                     }
-                    if (formacaoSp.get(0).toString() == "Doutorado") {
+                }
+                if (formacaoSp.selectedItem.toString() == "Doutorado") {
+                    if (anoConclusaoMestEt.text.isNotEmpty() && instituicaoMesEt.text.isNotEmpty() && tituloEt.text.isNotEmpty()
+                        && orientadorEt.text.isNotEmpty()) {
                         camposEntrada.add(
                             "Doutorado, Ano de Conclusão, Instituição, Título Monografia e Orientador: " +
                                     "${anoConclusaoEt.text} - ${instituicaoEt.text} - ${tituloEt.text}" +
