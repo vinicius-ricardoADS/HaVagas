@@ -2,20 +2,57 @@ package br.edu.ifsp.ads.havagas
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore.Audio.Radio
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import androidx.core.view.get
-import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
 import br.edu.ifsp.ads.havagas.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        val NOME = "NOME"
+        val EMAIL = "EMAIL"
+        val EMAILCK = "EMAILCK"
+        val TIPO_TELEFONE = "TIPO_TELEFONE"
+        val TELEFONE = "TELEFONE"
+        val CELULARCB = "CELULARCB"
+        val CELULAR = "CELULAR"
+        val SEXORG = "SEXO"
+        val DATANASC = "DATA_DE_NASCIMENTO"
+        val ANO_FORMATURA = "ANO_FORMATURA"
+        val ANO_CONCLUSAO = "ANO_CONCLUSAO"
+        val ANO_CONCLUSA_MEST_DOUT = "ANO_CONCLUSAO_MEST_DOUT"
+        val INSTITUICAO = "INSTITUICAO"
+        val INSTITUICAO_MEST_DOUT = "INSTITUICAO_MEST_DOUT"
+        val TITULO_MONOGRAFIA = "TITULO_MONOGRAFIA"
+        val ORIENTADOR = "ORIENTADOR"
+    }
+
     private val activityMainBinding : ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        with(activityMainBinding) {
+            nomeCompletoEt.setText(savedInstanceState.getString(NOME))
+            emailEt.setText(savedInstanceState.getString(EMAIL))
+            checkBoxEmail.isChecked = savedInstanceState.getBoolean(EMAILCK)
+            tipoTelefoneRg.check(savedInstanceState.getInt(TIPO_TELEFONE))
+            telefoneEt.setText(savedInstanceState.getString(TELEFONE))
+            celularCb.isChecked = savedInstanceState.getBoolean(CELULARCB)
+            celularEt.setText(savedInstanceState.getString(CELULAR))
+            sexoRg.check(savedInstanceState.getInt(SEXORG))
+            datanascEt.setText(savedInstanceState.getString(DATANASC))
+            anoFormaturaEt.setText(savedInstanceState.getString(ANO_FORMATURA))
+            anoConclusaoEt.setText(savedInstanceState.getString(ANO_CONCLUSAO))
+            instituicaoEt.setText(savedInstanceState.getString(INSTITUICAO))
+            anoConclusaoMestEt.setText(savedInstanceState.getString(ANO_CONCLUSA_MEST_DOUT))
+            instituicaoMesEt.setText(savedInstanceState.getString(INSTITUICAO_MEST_DOUT))
+            tituloEt.setText(savedInstanceState.getString(TITULO_MONOGRAFIA))
+            orientadorEt.setText(savedInstanceState.getString(ORIENTADOR))
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,9 +106,37 @@ class MainActivity : AppCompatActivity() {
                 vagasInteresseEt.setText("")
                 anoFormaturaEt.setText("")
                 formacaoSp.setSelection(0)
+                datanascEt.setText("")
             }
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        with(activityMainBinding) {
+            outState.putString(NOME, nomeCompletoEt.text.toString())
+            outState.putString(EMAIL, emailEt.text.toString())
+            outState.putBoolean(EMAILCK, checkBoxEmail.isChecked)
+            if (tipoTelefoneRg.checkedRadioButtonId != -1) {
+                outState.putInt(TIPO_TELEFONE, findViewById<RadioButton>(tipoTelefoneRg.checkedRadioButtonId).id)
+            }
+            outState.putString(TELEFONE, telefoneEt.text.toString())
+            outState.putBoolean(CELULARCB, checkBoxEmail.isChecked)
+            outState.putString(CELULAR, celularEt.text.toString())
+            if (sexoRg.checkedRadioButtonId != -1)
+                outState.putInt(SEXORG, findViewById<RadioButton>(sexoRg.checkedRadioButtonId).id)
+            outState.putString(DATANASC, datanascEt.text.toString())
+            outState.putString(ANO_FORMATURA, anoFormaturaEt.text.toString())
+            outState.putString(ANO_CONCLUSAO, anoConclusaoEt.text.toString())
+            outState.putString(INSTITUICAO, instituicaoEt.text.toString())
+            outState.putString(ANO_CONCLUSA_MEST_DOUT, anoConclusaoMestEt.text.toString())
+            outState.putString(INSTITUICAO_MEST_DOUT, instituicaoMesEt.text.toString())
+            outState.putString(TITULO_MONOGRAFIA, tituloEt.text.toString())
+            outState.putString(ORIENTADOR, orientadorEt.text.toString())
+        }
+    }
+
+
 
     private fun formatarDados(binding: ActivityMainBinding): String {
         var dadosCompletos : String
